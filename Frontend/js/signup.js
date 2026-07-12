@@ -1,70 +1,50 @@
-function signup(){
+async function signup() {
 
-    let username = document.getElementById("newUsername").value;
-    let email = document.getElementById("newEmail").value;
-    let password = document.getElementById("newPassword").value;
+    const username = document.getElementById("newUsername").value;
+    const email = document.getElementById("newEmail").value;
+    const password = document.getElementById("newPassword").value;
 
-
-    if(username==="" || email==="" || password===""){
-
-        document.getElementById("message").textContent =
-        "Fill all details ❌";
-
+    if (username === "" || email === "" || password === "") {
+        document.getElementById("message").textContent = "Fill all details ❌";
         return;
-
     }
 
+    try {
 
-    // Get existing users
+        const response = await fetch("https://gamevora-backend.onrender.com/api/auth/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                email,
+                password
+            })
+        });
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+        const data = await response.json();
 
+        if (data.success) {
 
-    // Check duplicate email
+            document.getElementById("message").textContent =
+                "Account Created Successfully ✅";
 
-    let existingUser = users.find(user => user.email === email);
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1000);
 
+        } else {
 
-    if(existingUser){
+            document.getElementById("message").textContent = data.message;
 
+        }
+
+    } catch (error) {
+
+        console.error(error);
         document.getElementById("message").textContent =
-        "Email already registered ❌";
-
-        return;
+            "Server Error ❌";
 
     }
-
-
-    // Create new user
-
-    let newUser = {
-
-        username: username,
-        email: email,
-        password: password
-
-    };
-
-
-    // Add user
-
-    users.push(newUser);
-
-
-    // Save all users
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-
-    document.getElementById("message").textContent =
-    "Account Created Successfully ✅";
-
-
-    setTimeout(()=>{
-
-        window.location="login.html";
-
-    },1000);
-
-
 }
