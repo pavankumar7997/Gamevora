@@ -1533,49 +1533,59 @@ nav input{
 
 }
 /* Mobile Responsive */
+@media (max-width: 768px) {
 
-@media (max-width: 768px){
-
-    body{
-        overflow-x:hidden;
+    body {
+        overflow-x: hidden;
     }
 
-    .top-bar{
-        flex-direction:column;
-        padding:15px;
-        gap:15px;
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
     }
 
-    nav ul{
-        flex-direction:column;
-        text-align:center;
-        gap:10px;
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
     }
 
-    .hero-content{
-        padding:20px;
-        text-align:center;
+    .hero-content {
+        width: 90%;
+        text-align: center;
+        transform: translateY(20px);
     }
 
-    .hero-content h1{
-        font-size:32px;
+    .hero-content h1 {
+        font-size: 30px;
     }
 
-    .hero-content p{
-        font-size:18px;
+    .hero-content p {
+        font-size: 16px;
     }
 
-    .game-container,
-    .games-container{
-        grid-template-columns:1fr;
-        padding:20px;
+    .games-container {
+        grid-template-columns: 1fr;
+        padding: 15px;
     }
 
-    .game-card{
-        width:100%;
+    .game-card {
+        width: 90%;
+        margin: auto;
     }
 
-    button{
-        width:100%;
+    button {
+        width: 90%;
     }
+}
+
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1200px) {
+
+    .games-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }
