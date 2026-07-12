@@ -1532,3 +1532,50 @@ nav input{
     width:100%;
 
 }
+/* Mobile Responsive */
+
+@media (max-width: 768px){
+
+    body{
+        overflow-x:hidden;
+    }
+
+    .top-bar{
+        flex-direction:column;
+        padding:15px;
+        gap:15px;
+    }
+
+    nav ul{
+        flex-direction:column;
+        text-align:center;
+        gap:10px;
+    }
+
+    .hero-content{
+        padding:20px;
+        text-align:center;
+    }
+
+    .hero-content h1{
+        font-size:32px;
+    }
+
+    .hero-content p{
+        font-size:18px;
+    }
+
+    .game-container,
+    .games-container{
+        grid-template-columns:1fr;
+        padding:20px;
+    }
+
+    .game-card{
+        width:100%;
+    }
+
+    button{
+        width:100%;
+    }
+}
