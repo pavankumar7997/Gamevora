@@ -102,10 +102,12 @@ router.post("/login", async (req, res) => {
             { expiresIn: "7d" }
         );
 
-        res.json({
+        const userData = await User.findById(user._id).select("-password");
+
+            res.json({
             success: true,
             token,
-            user
+            user: userData
         });
 
     } catch (err) {
