@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku | Gamevora</title>
+
+    <link rel="stylesheet" href="../css/sudoku.css">
+</head>
+<body>
+
+<header>
+
+    <h1>🧩 Sudoku</h1>
+
+    <div class="top-info">
+
+        <div>
+            Time
+            <span id="timer">00:00</span>
+        </div>
+
+        <div>
+            Best
+            <span id="bestTime">--:--</span>
+        </div>
+
+        <div>
+            Mistakes
+            <span id="mistakes">0/3</span>
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="controls">
+
+    <select id="difficulty">
+
+        <option value="35">Easy</option>
+        <option value="45" selected>Medium</option>
+        <option value="55">Hard</option>
+
+    </select>
+    
+    <button id="restartBtn">
+        🔄 New Game
+    </button>
+    <button id="hintBtn">
+        💡 Hint (<span id="hintCount">3</span>)
+    </button>
+    <button id="notesBtn">
+        ✏️ Notes: OFF
+    </button>
+
+</div>
+
+
+
+<div id="board"></div>
+
+
+
+<div id="numbers">
+
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+    <button>6</button>
+    <button>7</button>
+    <button>8</button>
+    <button>9</button>
+
+    <button id="erase">
+        ❌
+    </button>
+
+</div>
+
+
+<script src="../js/sudoku.js"></script>
+<!-- Win Popup -->
+
+<div id="winPopup" class="popup">
+
+    <div class="popup-content">
+
+        <h2>🎉 Congratulations!</h2>
+
+        <p>You solved the Sudoku!</p>
+
+        <h3 id="finalTime">00:00</h3>
+
+        <button id="play-again-btn">Play Again</button>
+
+    </div>
+
+</div>
+</body>
+</html>

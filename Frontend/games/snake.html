@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game | GameHub</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/snake.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <h1>🎮 GameHub</h1>
+
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../games.html">Games</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Snake Game -->
+    <section class="snake-container">
+
+        <h1>🐍 Snake Game</h1>
+
+        <p class="game-info">
+            Control the snake, eat food, and beat your high score!
+        </p>
+
+        <!-- Difficulty -->
+        <div class="difficulty-selection">
+
+            <button id="easyBtn" class="active">
+                🟢 Easy
+            </button>
+
+            <button id="mediumBtn">
+                🟡 Medium
+            </button>
+
+            <button id="hardBtn">
+                🔴 Hard
+            </button>
+
+        </div>
+
+        <!-- Scoreboard -->
+        <div class="scoreboard">
+
+            <div class="score-card">
+                <h3>⭐ Score</h3>
+                <span id="score">0</span>
+            </div>
+
+            <div class="score-card">
+                <h3>🏆 High Score</h3>
+                <span id="highScore">0</span>
+            </div>
+
+        </div>
+
+        <!-- Game Canvas -->
+        <canvas
+            id="gameCanvas"
+            width="500"
+            height="500">
+        </canvas>
+
+        <!-- Controls -->
+        <div class="game-buttons">
+
+            <button id="startBtn">
+                ▶ Start
+            </button>
+
+            <button id="pauseBtn">
+                ⏸ Pause
+            </button>
+
+            <button id="restartBtn">
+                🔄 Restart
+            </button>
+
+        </div>
+
+        <!-- Mobile Controls -->
+        <div class="mobile-controls">
+
+            <button id="upBtn">⬆</button>
+
+            <div class="middle-row">
+                <button id="leftBtn">⬅</button>
+                <button id="downBtn">⬇</button>
+                <button id="rightBtn">➡</button>
+            </div>
+
+        </div>
+
+        <!-- Game Message -->
+        <h2 id="gameMessage">
+            Press ▶ Start to Play
+        </h2>
+
+    </section>
+
+    <script src="../js/snake.js"></script>
+
+</body>
+</html>

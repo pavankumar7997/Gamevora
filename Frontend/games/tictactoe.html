@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe | 𝔊𝔞𝔪𝔢𝔳𝔬𝔯𝔞</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <h1>🎮 𝔊𝔞𝔪𝔢𝔳𝔬𝔯𝔞</h1>
+
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../games.html">Games</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="tic-container">
+
+        <h1>Tic-Tac-Toe</h1>
+        <div class="mode-selection">
+    <button id="onePlayerBtn">🤖 1 Player</button>
+    <div class="difficulty-selection">
+
+    <button id="easyBtn" class="active">🟢 Easy</button>
+
+    <button id="mediumBtn">🟡 Medium</button>
+
+    <button id="hardBtn">🔴 Hard</button>
+
+</div>
+    <button id="twoPlayerBtn" class="active">👥 2 Players</button>
+</div>
+
+<p>Player X's Turn</p>
+
+<div class="board">
+
+    <div class="cell" data-index="0"></div>
+    <div class="cell" data-index="1"></div>
+    <div class="cell" data-index="2"></div>
+
+    <div class="cell" data-index="3"></div>
+    <div class="cell" data-index="4"></div>
+    <div class="cell" data-index="5"></div>
+
+    <div class="cell" data-index="6"></div>
+    <div class="cell" data-index="7"></div>
+    <div class="cell" data-index="8"></div>
+
+</div>
+        
+<button id="restart-btn">Restart Game</button>
+
+    </section>
+    <div class="scoreboard">
+
+    <div class="score-card">
+        <h3>Player X</h3>
+        <span id="scoreX">0</span>
+    </div>
+
+    <div class="score-card">
+        <h3>Draws</h3>
+        <span id="scoreDraw">0</span>
+    </div>
+
+    <div class="score-card">
+        <h3>Player O</h3>
+        <span id="scoreO">0</span>
+    </div>
+     <script src="../js/tictactoe.js"></script>
+
+    </div>
+</body>
+</html>
