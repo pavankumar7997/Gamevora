@@ -134,7 +134,6 @@ const welcomeUser = document.getElementById("welcomeUser");
 const avatar = document.getElementById("avatar");
 const logoutBtn = document.getElementById("logoutBtn");
 
-const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
 
 if (loggedUser) {
 
