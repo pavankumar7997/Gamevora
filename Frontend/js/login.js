@@ -23,17 +23,14 @@ async function login() {
 
             alert("Login Successful ✅");
 
-            console.log("Saving token...");
-
             localStorage.setItem("token", data.token);
             localStorage.setItem("loggedUser", JSON.stringify(data.user));
 
-            console.log("Token:", localStorage.getItem("token"));
-            console.log("User:", localStorage.getItem("loggedUser"));
+            console.log("Token after save:", localStorage.getItem("token"));
+            console.log("User after save:", localStorage.getItem("loggedUser"));
 
-            // Temporarily disable redirect
+            // TEMPORARILY disable redirect
             // window.location.href = "index.html";
-
         }else {
 
             alert(data.message);
