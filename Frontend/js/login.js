@@ -5,7 +5,7 @@ async function login() {
     console.log("Password =", password);
 
     try {
-
+        const API = "https://gamevora-backend.onrender.com";
         const response = await fetch("https://gamevora-backend.onrender.com/api/auth/login", {
             method: "POST",
             headers: {
@@ -18,17 +18,23 @@ async function login() {
         });
 
         const data = await response.json();
-        console.log(data);
+        console.log("Login Response:", data);
         if (data.success) {
 
             alert("Login Successful ✅");
 
+            console.log("Saving token...");
+
             localStorage.setItem("token", data.token);
             localStorage.setItem("loggedUser", JSON.stringify(data.user));
 
-            window.location.href = "index.html";
+            console.log("Token:", localStorage.getItem("token"));
+            console.log("User:", localStorage.getItem("loggedUser"));
 
-        } else {
+            // Temporarily disable redirect
+            // window.location.href = "index.html";
+
+        }else {
 
             alert(data.message);
 
