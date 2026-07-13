@@ -1,3 +1,13 @@
+// Show logged-in user
+const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+if (loggedUser) {
+    const username = document.getElementById("username");
+
+    if (username) {
+        username.textContent = `👋 ${loggedUser.username}`;
+    }
+}
 // Check Login
 const token = localStorage.getItem("token");
 

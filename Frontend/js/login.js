@@ -21,7 +21,7 @@ async function login() {
         console.log("Login Response:", data);
         if (data.success) {
 
-           // alert("Login Successful ✅");
+            alert("Login Successful ✅");
 
             localStorage.setItem("token", data.token);
             localStorage.setItem("loggedUser", JSON.stringify(data.user));
