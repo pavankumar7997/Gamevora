@@ -23,13 +23,30 @@
 
 
 <input type="email" id="newEmail" placeholder="Email">
+<input
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm Password"
+>
+<input
+    type="tel"
+    id="phone"
+    placeholder="+91XXXXXXXXXX"
+>
+<button type="button" id="sendOtpBtn">Send OTP</button>
+<input
+    type="text"
+    id="otp"
+    placeholder="Enter OTP"
+    maxlength="6"
+><button type="button" id="verifyOtpBtn">
+    Verify OTP
+</button>
 
 
-<input type="password" id="newPassword" placeholder="Password">
 
-
-<button onclick="signup()">
-Sign Up
+<button id="signupBtn">
+    Sign Up
 </button>
 
 
@@ -38,9 +55,10 @@ Sign Up
 
 </div>
 
+<div id="recaptcha-container"></div>
 
-<script src="js/signup.js"></script>
-
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/signup.js"></script>
 
 </body>
 
