@@ -110,7 +110,7 @@ nav ul li a:hover{
     justify-content: flex-start; /* Top */
     align-items: center;
     text-align: center;
-    padding-top: 20px; /* Adjust distance from the top */
+    margin-top: 40px; /* Adjust distance from the top */
 }
 .hero-content h1{
      font-size: 3.5rem;
