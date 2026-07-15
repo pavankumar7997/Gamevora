@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
 
     try {
 
-        const { username, email, password } = req.body;
+        const { username, email, phone, password } = req.body;
 
         // Check if user exists
         const existingUser = await User.findOne({ email });
@@ -28,6 +28,23 @@ router.post("/register", async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "Email already exists"
+            });
+        }
+        // Check if phone already exists
+        const existingPhone = await User.findOne({ phone });
+
+        if (existingPhone) {
+            return res.status(400).json({
+                success: false,
+                message: "Phone number already exists"
+            });
+        }
+        const existingUsername = await User.findOne({ username });
+
+        if (existingUsername) {
+            return res.status(400).json({
+                success: false,
+                message: "Username already exists"
             });
         }
 
@@ -40,6 +57,7 @@ router.post("/register", async (req, res) => {
         const user = await User.create({
             username,
             email,
+            phone,
             password: hashedPassword
         });
 
