@@ -12,6 +12,7 @@
 body{
     background:#0f172a;
     color:white;
+    overflow-x:hidden;
 }
 
 /* Navigation */
@@ -928,12 +929,10 @@ nav input{
 
 }
 .card img{
-
     width:100%;
-    height:200px;
-
-    object-fit:contain;
-
+    height:220px;
+    object-fit:cover;
+    display:block;
 }
 
 
@@ -964,214 +963,7 @@ nav input{
    Responsive Design
 ===================================== */
 
-/* Tablets */
-@media (max-width:992px){
 
-    nav{
-        flex-direction:column;
-        gap:20px;
-    }
-
-    nav ul{
-        flex-wrap:wrap;
-        justify-content:center;
-    }
-
-    .game-container{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .hero-content h1{
-        font-size:45px;
-    }
-
-}
-
-/* Phones */
-@media (max-width:768px){
-
-    .top-bar{
-        flex-direction:column;
-        gap:15px;
-        text-align:center;
-    }
-
-    nav{
-        flex-direction:column;
-    }
-
-    nav ul{
-        flex-direction:column;
-        gap:15px;
-        align-items:center;
-    }
-
-    .hero{
-        padding:80px 20px;
-    }
-
-    .hero-content h1{
-        font-size:34px;
-    }
-
-    .hero-content p{
-        width:100%;
-        font-size:18px;
-    }
-
-    .game-container{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .review-container{
-        flex-direction:column;
-    }
-
-    .trending-container{
-        flex-direction:column;
-    }
-
-    table{
-        font-size:14px;
-    }
-
-}
-
-/* Small Phones */
-@media (max-width:480px){
-
-    .hero-content h1{
-        font-size:28px;
-    }
-
-    .hero-content p{
-        font-size:16px;
-    }
-
-    .btn{
-        padding:12px 25px;
-        font-size:16px;
-    }
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .card img{
-
-    width:100%;
-    height:220px;
-
-    object-fit:cover;
-
-    border-radius:10px 10px 0 0;
-
-    display:block;
-
-}
-
-    footer{
-        text-align:center;
-    }
-
-}
-/* ==========================
-   Responsive Design
-========================== */
-
-/* Tablets */
-@media screen and (max-width:992px){
-
-    nav{
-        flex-direction:column;
-        gap:20px;
-    }
-
-    nav ul{
-        flex-wrap:wrap;
-        justify-content:center;
-    }
-
-    .game-container{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .hero-content h1{
-        font-size:42px;
-    }
-
-}
-
-/* Phones */
-@media screen and (max-width:768px){
-
-    .top-bar{
-        flex-direction:column;
-        gap:15px;
-    }
-
-    nav{
-        flex-direction:column;
-    }
-
-    nav ul{
-        flex-direction:column;
-        align-items:center;
-        gap:15px;
-    }
-
-    .hero{
-        padding:80px 20px;
-    }
-
-    .hero-content h1{
-        font-size:32px;
-    }
-
-    .hero-content p{
-        width:100%;
-        font-size:18px;
-    }
-
-    .game-container{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .review-container{
-        flex-direction:column;
-    }
-
-    .trending-container{
-        flex-direction:column;
-    }
-
-}
-
-/* Small Phones */
-@media screen and (max-width:480px){
-
-    .hero-content h1{
-        font-size:26px;
-    }
-
-    .hero-content p{
-        font-size:16px;
-    }
-
-    .btn{
-        width:180px;
-        margin:auto;
-    }
-
-}
 /* ==========================
    Loader
 ========================== */
@@ -1503,7 +1295,10 @@ nav input{
     padding:20px;
 
 }
-
+.game-details{
+    max-width:1200px;
+    margin:auto;
+}
 .contact-info{
 
     flex:1;
@@ -1624,20 +1419,23 @@ nav{
     justify-content:space-between;
     align-items:center;
     flex-wrap:wrap;
-    gap:15px;
+    gap:20px;
+    width:100%;
 }
 
 nav ul{
     display:flex;
-    align-items:center;
-    gap:15px;
     flex-wrap:wrap;
+    gap:15px;
+    justify-content:center;
+    align-items:center;
 }
 
 /* Welcome + Logout */
 #welcomeUser,
 #username{
-    white-space:nowrap;
+    white-space:normal;
+    word-break:break-word;
 }
 
 #logoutBtn{
@@ -1648,12 +1446,14 @@ nav ul{
 img{
     max-width:100%;
     height:auto;
+    display:block;
 }
-
 /* Tablets */
 @media (max-width:992px){
 
     nav{
+        display:flex;
+        justify-content:space-between;
         flex-direction:column;
         align-items:center;
     }
