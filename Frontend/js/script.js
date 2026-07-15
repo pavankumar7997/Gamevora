@@ -125,7 +125,7 @@ else{
 localStorage.setItem("visits",visits);
 
 
-console.log("GameHub Visits:",visits);
+console.log("𝔊𝔞𝔪𝔢𝔳𝔬𝔯𝔞 Visits:",visits);
 // ==========================
 // User Profile & Logout
 // ==========================

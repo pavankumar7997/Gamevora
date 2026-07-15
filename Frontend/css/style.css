@@ -1486,3 +1486,18 @@ img{
     }
 
 }
+body {
+    overflow-x: hidden;
+}
+
+main {
+    padding-top: 100px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+nav {
+    position: relative !important;
+}
