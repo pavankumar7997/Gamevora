@@ -103,14 +103,13 @@ nav ul li a:hover{
 
 }
 
-.hero-content{
-  height: 80vh;
+.hero {
+    position: relative;
+    min-height: 500px;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Top */
     align-items: center;
-    text-align: center;
-    margin-top: 40px; /* Adjust distance from the top */
+    justify-content: center;
 }
 .hero-content h1{
      font-size: 3.5rem;
