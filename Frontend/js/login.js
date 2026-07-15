@@ -1,11 +1,8 @@
 async function login() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    console.log("Email =", email);
-    console.log("Password =", password);
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
     try {
-        const API = "https://gamevora-backend.onrender.com";
         const response = await fetch("https://gamevora-backend.onrender.com/api/auth/login", {
             method: "POST",
             headers: {
@@ -19,27 +16,28 @@ async function login() {
 
         const data = await response.json();
         console.log("Login Response:", data);
-        if (data.success) {
+
+        if (response.ok && data.success) {
 
             alert("Login Successful ✅");
 
+            // Save token and user
             localStorage.setItem("token", data.token);
             localStorage.setItem("loggedUser", JSON.stringify(data.user));
 
-            console.log("Token after save:", localStorage.getItem("token"));
-            console.log("User after save:", localStorage.getItem("loggedUser"));
+            // Redirect to Home Page
+            window.location.href = "index.html";
 
-            // TEMPORARILY disable redirect
-            // window.location.href = "index.html";
-        }else {
+        } else {
 
-            alert(data.message);
+            alert(data.message || "Invalid Email or Password");
 
         }
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Login Error:", error);
         alert("Server Error");
+
     }
 }
