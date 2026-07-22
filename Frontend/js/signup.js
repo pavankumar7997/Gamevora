@@ -1,148 +1,104 @@
-// 1. Import Firebase
-import { auth } from "./firebase.js";
+let otpVerified = false;
 
-import {
-    RecaptchaVerifier,
-    signInWithPhoneNumber
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+const API = "https://gamevora-backend.onrender.com/api/auth";
 
-// 2. Create invisible reCAPTCHA  ← STEP 8.2
-window.recaptchaVerifier = new RecaptchaVerifier(
-    auth,
-    "recaptcha-container",
-    {
-        size: "invisible"
-    }
-);
+// Send OTP
+document.getElementById("sendOtpBtn").addEventListener("click", async () => {
 
-// 3. Get button
-const sendOtpBtn = document.getElementById("sendOtpBtn");
+    const email = document.getElementById("newEmail").value.trim();
 
-// 4. Send OTP
-sendOtpBtn.addEventListener("click", async () => {
-
-    const phone = document.getElementById("phone").value.trim();
-
-    if (!phone.startsWith("+")) {
-        alert("Enter phone number like +919876543210");
+    if (!email) {
+        alert("Enter your email first");
         return;
     }
 
-    try {
-        const confirmationResult = await signInWithPhoneNumber(
-            auth,
-            phone,
-            window.recaptchaVerifier
-        );
+    const response = await fetch(`${API}/send-otp`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email })
+    });
 
-        window.confirmationResult = confirmationResult;
+    const data = await response.json();
 
-        alert("OTP sent successfully!");
-
-    } catch (err) {
-        console.error(err);
-        alert(err.message);
-    }
-
+    alert(data.message);
 });
-const verifyOtpBtn = document.getElementById("verifyOtpBtn");
 
-let otpVerified = false;
+// Verify OTP
+document.getElementById("verifyOtpBtn").addEventListener("click", async () => {
 
-verifyOtpBtn.addEventListener("click", async () => {
+    const email = document.getElementById("newEmail").value.trim();
+    const otp = document.getElementById("otp").value.trim();
 
-    const otp = document.getElementById("otp").value;
+    const response = await fetch(`${API}/verify-otp`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, otp })
+    });
 
-    try {
+    const data = await response.json();
 
-        await window.confirmationResult.confirm(otp);
-
+    if (data.success) {
         otpVerified = true;
-
-        alert("Phone number verified successfully ✅");
-
-    } catch (err) {
-
+        alert("Email verified successfully ✅");
+    } else {
         otpVerified = false;
-
-        alert("Invalid OTP ❌");
-
+        alert(data.message);
     }
-
 });
+
+// Signup
 async function signup() {
 
     if (!otpVerified) {
-        alert("Please verify your phone number first.");
+        alert("Please verify your email first.");
         return;
     }
 
     const username = document.getElementById("newUsername").value.trim();
     const email = document.getElementById("newEmail").value.trim();
+    const phone = document.getElementById("phone").value.trim();
     const password = document.getElementById("newPassword").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;   
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (
-        username === "" ||
-        email === "" ||
-        password === "" ||
-        confirmPassword === ""
-    ) {
+    if (!username || !email || !phone || !password || !confirmPassword) {
         document.getElementById("message").textContent = "Fill all details ❌";
-        
         return;
     }
+
     if (password !== confirmPassword) {
-
-        document.getElementById("message").textContent =
-            "Passwords do not match ❌";
-
+        document.getElementById("message").textContent = "Passwords do not match ❌";
         return;
     }
 
-    try {
-        const phone = document.getElementById("phone").value.trim();
-        const response = await fetch("https://gamevora-backend.onrender.com/api/auth/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-        
-        
+    const response = await fetch(`${API}/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            email,
+            phone,
+            password
+        })
+    });
 
-            body: JSON.stringify({
-                username,
-                email,
-                phone,
-                password
-            })
-        });
+    const data = await response.json();
 
-        const data = await response.json();
-
-        if (data.success) {
-
-            document.getElementById("message").textContent =
-                "Account Created Successfully ✅";
-
-            setTimeout(() => {
-                window.location.href = "login.html";
-            }, 1000);
-
-        } else {
-
-            document.getElementById("message").textContent = data.message;
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
+    if (data.success) {
         document.getElementById("message").textContent =
-            "Server Error ❌";
+            "Account Created Successfully ✅";
 
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1000);
+    } else {
+        document.getElementById("message").textContent = data.message;
     }
 }
-const signupBtn = document.getElementById("signupBtn");
 
-signupBtn.addEventListener("click", signup);
+document.getElementById("signupBtn").addEventListener("click", signup);

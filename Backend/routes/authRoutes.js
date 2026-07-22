@@ -4,7 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
-
+const sendEmail = require("../utils/sendEmail");
+const Otp = require("../models/Otp");
 const router = express.Router();
 router.get("/test", (req, res) => {
     res.json({
@@ -21,7 +22,20 @@ router.post("/register", async (req, res) => {
 
         const { username, email, phone, password } = req.body;
 
-        // Check if user exists
+        // Check OTP verification
+        const verifiedOtp = await Otp.findOne({
+            email,
+            verified: true
+        });
+
+        if (!verifiedOtp) {
+            return res.status(400).json({
+                success: false,
+                message: "Please verify your email OTP first."
+            });
+        }
+
+        // Check if email already exists
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -30,6 +44,7 @@ router.post("/register", async (req, res) => {
                 message: "Email already exists"
             });
         }
+
         // Check if phone already exists
         const existingPhone = await User.findOne({ phone });
 
@@ -37,7 +52,7 @@ router.post("/register", async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "Phone number already exists"
-            });
+             });
         }
         const existingUsername = await User.findOne({ username });
 
@@ -60,7 +75,8 @@ router.post("/register", async (req, res) => {
             phone,
             password: hashedPassword
         });
-
+        // Delete OTP after successful registration
+        await Otp.deleteOne({ email });
         // Create JWT
         const token = jwt.sign(
             { id: user._id },
@@ -214,5 +230,91 @@ router.post("/favorite", async (req, res) => {
     }
 
 });
+router.post("/send-otp", async (req, res) => {
+    try {
+        const { email } = req.body;
 
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: "Email is required"
+            });
+        }
+
+        // Generate a 6-digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+        // Delete old OTP if it exists
+        await Otp.deleteMany({ email });
+
+        // Save the new OTP
+        await Otp.create({
+            email,
+            otp,
+            expiresAt: new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
+        });
+
+        // Send the email
+        await sendEmail(
+            email,
+            "GameVora Email Verification",
+            `Your OTP is: ${otp}\n\nThis OTP is valid for 5 minutes.`
+        );
+
+        res.json({
+            success: true,
+            message: "OTP sent successfully"
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+});
+router.post("/verify-otp", async (req, res) => {
+    try {
+        const { email, otp } = req.body;
+
+        if (!email || !otp) {
+            return res.status(400).json({
+                success: false,
+                message: "Email and OTP are required"
+            });
+        }
+
+        const otpData = await Otp.findOne({ email });
+
+        if (!otpData) {
+            return res.status(400).json({
+                success: false,
+                message: "OTP not found or expired"
+            });
+        }
+
+        if (otpData.otp !== otp) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid OTP"
+            });
+        }
+
+        otpData.verified = true;
+        await otpData.save();
+
+        res.json({
+            success: true,
+            message: "OTP verified successfully"
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+});
 module.exports = router;

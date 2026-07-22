@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: true
     },
+    emailVerified: {
+        type: Boolean,
+        default: false
+    },
 
     avatar: {
         type: String,
@@ -34,6 +38,7 @@ const userSchema = new mongoose.Schema(
         type: Number,
         default: 0
     },
+    
 
     scores: {
         snake: {
