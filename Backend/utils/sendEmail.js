@@ -18,3 +18,4 @@ const sendEmail = async (to, subject, text) => {
     text,
   });
 };
+module.exports = sendEmail;
