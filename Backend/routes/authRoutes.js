@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 const sendEmail = require("../utils/sendEmail");
-const Otp = require("../models/Otp");
+const Otp = require("../models/otp");
 const router = express.Router();
 router.get("/test", (req, res) => {
     res.json({
