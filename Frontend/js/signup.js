@@ -60,7 +60,6 @@ async function signup() {
 
     const username = document.getElementById("newUsername").value.trim();
     const email = document.getElementById("newEmail").value.trim();
-    const phone = document.getElementById("phone").value.trim();
     const password = document.getElementById("newPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
