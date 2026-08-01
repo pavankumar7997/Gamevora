@@ -1,4 +1,15 @@
-
+const API = "https://gamevora-backend.onrender.com/api/auth";
+fetch(`${API}/register`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        username,
+        email,
+        password
+    })
+});
 // Signup
 async function signup() {
 
@@ -19,17 +30,7 @@ async function signup() {
         return;
     }
 
-    const response = await fetch(`${API}/register`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username,
-            email,
-            password
-        })
-    });
+   
 
     const data = await response.json();
 
