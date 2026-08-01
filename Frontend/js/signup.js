@@ -21,33 +21,36 @@ async function signup() {
     }
 
     try {
-        const response = await fetch(`${API}/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                password
-            })
-        });
+    const response = await fetch(`${API}/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            email,
+            password
+        })
+    });
 
-        const data = await response.json();
+    const data = await response.json();
 
-        if (response.ok) {
-            message.textContent = "Account Created Successfully ✅";
+    console.log("Status:", response.status);
+    console.log("Response:", data);
 
-            setTimeout(() => {
-                window.location.href = "login.html";
-            }, 1000);
-        } else {
-            message.textContent = data.message || "Signup failed ❌";
-        }
-    } catch (error) {
-        console.error(error);
-        message.textContent = "Server Error ❌";
+    if (response.ok) {
+        message.textContent = "Account created successfully!";
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1000);
+    } else {
+        message.textContent = data.message;
     }
+
+} catch (error) {
+    console.error(error);
+    message.textContent = "Server Error";
+}
 }
 
 document.getElementById("signupBtn").addEventListener("click", signup);
