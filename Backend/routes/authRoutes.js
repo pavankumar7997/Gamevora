@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 const sendEmail = require("../utils/sendEmail");
-const Otp = require("../models/otp");
 const router = express.Router();
 router.get("/test", (req, res) => {
     res.json({
@@ -17,25 +16,18 @@ router.get("/test", (req, res) => {
 // Register User
 // ============================
 router.post("/register", async (req, res) => {
-
     try {
+        const { username, email, password } = req.body;
 
-        const { username, email, phone, password } = req.body;
-
-        // Check OTP verification
-        const verifiedOtp = await Otp.findOne({
-            email,
-            verified: true
-        });
-
-        if (!verifiedOtp) {
+        // Check all fields
+        if (!username || !email || !password) {
             return res.status(400).json({
                 success: false,
-                message: "Please verify your email OTP first."
+                message: "All fields are required"
             });
         }
 
-        // Check if email already exists
+        // Check email
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -45,15 +37,7 @@ router.post("/register", async (req, res) => {
             });
         }
 
-        // Check if phone already exists
-        const existingPhone = await User.findOne({ phone });
-
-        if (existingPhone) {
-            return res.status(400).json({
-                success: false,
-                message: "Phone number already exists"
-             });
-        }
+        // Check username
         const existingUsername = await User.findOne({ username });
 
         if (existingUsername) {
@@ -63,20 +47,16 @@ router.post("/register", async (req, res) => {
             });
         }
 
-        // Hash Password
-        const salt = await bcrypt.genSalt(10);
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // Create User
+        // Create user
         const user = await User.create({
             username,
             email,
-            phone,
             password: hashedPassword
         });
-        // Delete OTP after successful registration
-        await Otp.deleteOne({ email });
+
         // Create JWT
         const token = jwt.sign(
             { id: user._id },
@@ -86,19 +66,23 @@ router.post("/register", async (req, res) => {
 
         res.status(201).json({
             success: true,
+            message: "Registration successful",
             token,
-            user
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email
+            }
         });
 
     } catch (err) {
+        console.error(err);
 
         res.status(500).json({
             success: false,
             message: err.message
         });
-
     }
-
 });
 // ============================
 // Login User
@@ -230,91 +214,6 @@ router.post("/favorite", async (req, res) => {
     }
 
 });
-router.post("/send-otp", async (req, res) => {
-    try {
-        const { email } = req.body;
 
-        if (!email) {
-            return res.status(400).json({
-                success: false,
-                message: "Email is required"
-            });
-        }
 
-        // Generate a 6-digit OTP
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-        // Delete old OTP if it exists
-        await Otp.deleteMany({ email });
-
-        // Save the new OTP
-        await Otp.create({
-            email,
-            otp,
-            expiresAt: new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
-        });
-
-        // Send the email
-        await sendEmail(
-            email,
-            "GameVora Email Verification",
-            `Your OTP is: ${otp}\n\nThis OTP is valid for 5 minutes.`
-        );
-
-        res.json({
-            success: true,
-            message: "OTP sent successfully"
-        });
-
-    } catch (err) {
-        console.error(err);
-
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    }
-});
-router.post("/verify-otp", async (req, res) => {
-    try {
-        const { email, otp } = req.body;
-
-        if (!email || !otp) {
-            return res.status(400).json({
-                success: false,
-                message: "Email and OTP are required"
-            });
-        }
-
-        const otpData = await Otp.findOne({ email });
-
-        if (!otpData) {
-            return res.status(400).json({
-                success: false,
-                message: "OTP not found or expired"
-            });
-        }
-
-        if (otpData.otp !== otp) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid OTP"
-            });
-        }
-
-        otpData.verified = true;
-        await otpData.save();
-
-        res.json({
-            success: true,
-            message: "OTP verified successfully"
-        });
-
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    }
-});
 module.exports = router;
