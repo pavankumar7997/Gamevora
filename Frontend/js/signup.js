@@ -1,5 +1,4 @@
 
-console.log(data);
 // Signup
 async function signup() {
 
