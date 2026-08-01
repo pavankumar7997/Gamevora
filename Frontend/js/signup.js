@@ -8,10 +8,7 @@ const API = "https://gamevora-backend.onrender.com/api/auth";
 // Signup
 async function signup() {
 
-    if (!otpVerified) {
-        alert("Please verify your email first.");
-        return;
-    }
+    
 
     const username = document.getElementById("newUsername").value.trim();
     const email = document.getElementById("newEmail").value.trim();
