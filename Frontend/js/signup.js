@@ -1,4 +1,5 @@
 const API = "https://gamevora-backend.onrender.com/api/auth";
+const username = document.getElementById("username").value;
 fetch(`${API}/register`, {
     method: "POST",
     headers: {
