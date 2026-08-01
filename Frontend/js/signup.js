@@ -2,28 +2,7 @@ let otpVerified = false;
 
 const API = "https://gamevora-backend.onrender.com/api/auth";
 
-// Send OTP
-document.getElementById("sendOtpBtn").addEventListener("click", async () => {
 
-    const email = document.getElementById("newEmail").value.trim();
-
-    if (!email) {
-        alert("Enter your email first");
-        return;
-    }
-
-    const response = await fetch(`${API}/send-otp`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email })
-    });
-
-    const data = await response.json();
-
-    alert(data.message);
-});
 
 
 // Signup
