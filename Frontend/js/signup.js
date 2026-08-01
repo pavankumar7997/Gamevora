@@ -1,10 +1,5 @@
-let otpVerified = false;
 
-const API = "https://gamevora-backend.onrender.com/api/auth";
-
-
-
-
+console.log(data);
 // Signup
 async function signup() {
 
