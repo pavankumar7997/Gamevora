@@ -25,30 +25,6 @@ document.getElementById("sendOtpBtn").addEventListener("click", async () => {
     alert(data.message);
 });
 
-// Verify OTP
-document.getElementById("verifyOtpBtn").addEventListener("click", async () => {
-
-    const email = document.getElementById("newEmail").value.trim();
-    const otp = document.getElementById("otp").value.trim();
-
-    const response = await fetch(`${API}/verify-otp`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, otp })
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-        otpVerified = true;
-        alert("Email verified successfully ✅");
-    } else {
-        otpVerified = false;
-        alert(data.message);
-    }
-});
 
 // Signup
 async function signup() {
@@ -63,7 +39,7 @@ async function signup() {
     const password = document.getElementById("newPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (!username || !email || !phone || !password || !confirmPassword) {
+    if (!username || !email || !password || !confirmPassword) {
         document.getElementById("message").textContent = "Fill all details ❌";
         return;
     }
@@ -81,7 +57,6 @@ async function signup() {
         body: JSON.stringify({
             username,
             email,
-            phone,
             password
         })
     });
